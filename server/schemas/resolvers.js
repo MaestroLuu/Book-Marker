@@ -1,12 +1,18 @@
 const { Book, User } = require('../models');
-const {signToken} = require('../utils/auth')
-
+const { authMiddleware,signToken} = require('../utils/auth')
+const { AuthenticationError } = require('apollo-server-express');
 
 const resolvers = {
   Query: {
-    user: async (parent, { _id }) => {
-      return User.find(_id);
+    me: async (parent, args, context) => {
+      if (context.user) {
+        return User.findOne({ _id: context.user._id });
+      }
+      throw new AuthenticationError('You need to be logged in!');
     },
+    // user: async (parent, { _id }) => {
+    //   return User.find(_id);
+    // },
   },
   Mutation: {
     login: async (parent, { email, password }) => {
