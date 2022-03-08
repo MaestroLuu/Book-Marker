@@ -6,20 +6,21 @@ const resolvers = {
       return User.find(_id);
     },
   },
-//   Mutation: {
-//     createMatchup: async (parent, args) => {
-//       const matchup = await Matchup.create(args);
-//       return matchup;
-//     },
-//     createVote: async (parent, { _id, techNum }) => {
-//       const vote = await Matchup.findOneAndUpdate(
-//         { _id },
-//         { $inc: { [`tech${techNum}_votes`]: 1 } },
-//         { new: true }
-//       );
-//       return vote;
-//     },
-//   },
+  Mutation: {
+    login: async (parent, { email, password }) => {
+      const user = await User.findOne({ email });
+      if (!user) {
+        throw new AuthenticationError('No user found with this email address');
+      }
+      const correctPw = await user.isCorrectPassword(password);
+      if (!correctPw) {
+        throw new AuthenticationError('Incorrect credentials');
+      }
+      const token = signToken(user);
+      return { token, user };
+    },
+    
+  },
 };
 
 module.exports = resolvers;
