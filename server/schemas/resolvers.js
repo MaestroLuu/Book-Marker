@@ -1,5 +1,5 @@
 const { Book, User } = require('../models');
-const { authMiddleware,signToken} = require('../utils/auth')
+const { authMiddleware, signToken} = require('../utils/auth')
 const { AuthenticationError } = require('apollo-server-express');
 
 const resolvers = {
@@ -31,7 +31,7 @@ const resolvers = {
     },
     saveBook: async (parent, { authors, description, title, bookId, image, link }) => {
       const user = await Use.findOne({ token });
-      
+
     }
   },
 };
