@@ -10,9 +10,6 @@ const resolvers = {
       }
       throw new AuthenticationError('You need to be logged in!');
     },
-    // user: async (parent, { _id }) => {
-    //   return User.find(_id);
-    // },
   },
   Mutation: {
     login: async (parent, { email, password }) => {
@@ -32,9 +29,10 @@ const resolvers = {
       const token = signToken(user);
       return {token, user};
     },
-
-    // saveBook: async (parent, { authors, description, title, bookId, image, link }) => {
-    // }
+    saveBook: async (parent, { authors, description, title, bookId, image, link }) => {
+      const user = await Use.findOne({ token });
+      
+    }
   },
 };
 
