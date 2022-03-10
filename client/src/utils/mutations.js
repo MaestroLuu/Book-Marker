@@ -25,10 +25,38 @@ export const LOGIN_USER = gql`
   }
 `;
  
+export const SAVE_BOOK = gql`
+  mutation saveBook($authors: [String], $description: String, $title: String, $bookId: String, $image: String, $link: String) {
+    saveBook(authors: $authors, description: $description, title: $title, bookId: $bookId, image: $image, link: $link) {
+      _id
+      username
+      email
+      savedBooks {
+        bookId
+        authors
+        description
+        title
+        image
+        link
+      }
+    }
+  }
+`
+
 // export const SAVE_BOOK = gql`
-//   mutation saveBook($authors: [String]!, $description: String!, $title: String!, $bookId: String!, $image: String!, $link: String!) {
-//     saveBook(authors: $authors, description: $description, title: $title, bookId: $bookId, image: $image, link: $link) {
-      
+//   mutation saveBook($newBook: InputBook!) {
+//     saveBook(newBook: $newBook) {
+//       _id
+//       username
+//       email
+//       savedBooks {
+//         bookId
+//         authors
+//         description
+//         title
+//         image
+//         link
+//       }
 //     }
 //   }
-// `
+// `;
